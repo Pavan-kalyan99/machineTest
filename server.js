@@ -14,7 +14,9 @@ dotenv.config();
 const app = express();
 // app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(cors({
-  origin: "https://machinetest-y6dp.onrender.com/"
+  origin: "https://machinetest-y6dp.onrender.com/",
+    credentials: true,
+
 }));
 app.use(express.json());
 
