@@ -33,9 +33,9 @@ app.use(cors({
 app.use(express.json());
 
 // 
-app.use("/api/auth", authRoutes);
-app.use("/api/agents", agentRoutes);
-app.use("/api/csv", csvRoutes);
+app.use("/*{api/auth}", authRoutes);
+app.use("/*{api/agents}", agentRoutes);
+app.use("/*{api/csv}", csvRoutes);
 
 // added
 if (process.env.NODE_ENV === 'production') {
@@ -43,7 +43,7 @@ if (process.env.NODE_ENV === 'production') {
 
   app.use(express.static(distPath));
 
-  app.get('*', (req, res) => {
+  app.get('/*', (req, res) => {
     const indexPath = path.join(distPath, 'index.html');
     if (fs.existsSync(indexPath)) {
       res.sendFile(indexPath);
