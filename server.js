@@ -39,11 +39,11 @@ app.use("/api/csv", csvRoutes);
 
 // added
 if (process.env.NODE_ENV === 'production') {
-  const distPath = path.join(__dirname, 'testapp', 'dist');
+  const distPath = path.join(__dirname, '/testapp/dist');
 
   app.use(express.static(distPath));
 
-  app.get('/*', (req, res) => {
+  app.get('*', (req, res) => {
     const indexPath = path.join(distPath, 'index.html');
     if (fs.existsSync(indexPath)) {
       res.sendFile(indexPath);
