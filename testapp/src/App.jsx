@@ -6,7 +6,7 @@ import AddAgent from './components/pages/AddAgent';
 import UploadCSV from './components/pages/UploadFile';
 
 const App = () => {
-  console.log('called');
+  // console.log('called');
   return (
     // <Router>
     <>
