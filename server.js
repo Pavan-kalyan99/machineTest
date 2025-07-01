@@ -8,10 +8,18 @@ import authRoutes from "./routes/authRoutes.js";
 import agentRoutes from "./routes/agentRoutes.js";
 import csvRoutes from "./routes/csvRoutes.js";
 import connectDB from "./config.js";
+// added
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
 const app = express();
+// added
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
 // app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(cors({
     origin: ['http://localhost:5173', 'https://machinetest-y6dp.onrender.com'],
@@ -26,6 +34,15 @@ app.use("/api/auth", authRoutes);
 app.use("/api/agents", agentRoutes);
 app.use("/api/csv", csvRoutes);
 
+// added
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'testapp', 'dist')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'testapp', 'dist', 'index.html'));
+  });
+}
+// 
 const PORT = process.env.PORT || 8080;
 
 connectDB();
