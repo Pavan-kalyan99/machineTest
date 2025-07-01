@@ -33,9 +33,9 @@ app.use(cors({
 app.use(express.json());
 
 // 
-app.use("/*{api/auth}", authRoutes);
-app.use("/*{api/agents}", agentRoutes);
-app.use("/*{api/csv}", csvRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/agents", agentRoutes);
+app.use("/api/csv", csvRoutes);
 
 // added
 if (process.env.NODE_ENV === 'production') {
