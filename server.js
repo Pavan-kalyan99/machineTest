@@ -8,6 +8,8 @@ import authRoutes from "./routes/authRoutes.js";
 import agentRoutes from "./routes/agentRoutes.js";
 import csvRoutes from "./routes/csvRoutes.js";
 import connectDB from "./config.js";
+import fs from 'fs';
+
 // added
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -30,17 +32,24 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// commented
-// app.use("/api/auth", authRoutes);
-// app.use("/api/agents", agentRoutes);
-// app.use("/api/csv", csvRoutes);
+// 
+app.use("/api/auth", authRoutes);
+app.use("/api/agents", agentRoutes);
+app.use("/api/csv", csvRoutes);
 
 // added
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'testapp', 'dist')));
+  const distPath = path.join(__dirname, 'testapp', 'dist');
+
+  app.use(express.static(distPath));
 
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'testapp', 'dist', 'index.html'));
+    const indexPath = path.join(distPath, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      res.sendFile(indexPath);
+    } else {
+      res.status(500).send('Build not found.');
+    }
   });
 }
 // 
